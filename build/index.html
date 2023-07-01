@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width" />
+		
+		<link href="./_app/immutable/assets/2.8f32a22a.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.1bea6e2c.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.d35e8dc7.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.21a6fbbe.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.789e0a26.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.21dcd3ee.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.6ed06e5c.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/2.46d81f73.js"><title>Rust chat</title><!-- HEAD_svelte-14jt7jh_START --><!-- HEAD_svelte-14jt7jh_END -->
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">   <h1 data-svelte-h="svelte-uiuuyg">Chat app made with <a href="https://github.com/tokio-rs/axum" style="color: #21bad1;">Axum</a>
+    and
+    <a href="https://kit.svelte.dev/" style="color: #ff531a;">SvelteKit</a>.</h1> <div id="container" class="svelte-z8xppc"><div id="join-container" class="svelte-z8xppc"><input id="name-input" class="svelte-z8xppc"> <button id="join-button" class="svelte-z8xppc" data-svelte-h="svelte-js8t7x">Join chat</button></div> <div id="chat-container" class="svelte-z8xppc"><div id="chat-area" class="svelte-z8xppc"> <span></span></div> <input id="message-input" class="svelte-z8xppc" value=""></div> </div> 
+			
+			<script>
+				{
+					__sveltekit_1ljyl3x = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.1bea6e2c.js"),
+						import("./_app/immutable/entry/app.789e0a26.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 2],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
