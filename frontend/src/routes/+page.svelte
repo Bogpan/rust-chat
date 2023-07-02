@@ -9,6 +9,7 @@
     let autoscroll = false;
 
     let username: string;
+    let usernameValue = "";
     let input = "";
     let messages: {
         kind: string;
@@ -27,13 +28,14 @@
         }
 
         joinButton.disabled = true;
+        usernameInput.disabled = true;
 
         websocket = new WebSocket(`wss://${window.location.host}/websocket`);
         // websocket = new WebSocket(`ws://localhost:3000/websocket`);
 
         websocket.addEventListener("open", (event) => {
-            websocket.send(username);
-            usernameInput.disabled = true;
+            websocket.send(usernameValue);
+            username = usernameValue;
         });
 
         websocket.addEventListener("message", (event) => {
@@ -41,6 +43,7 @@
 
             if (message.content == "Username already exists.") {
                 joinButton.disabled = false;
+                usernameInput.disabled = false;
             }
 
             if (message.author === username) {
@@ -99,12 +102,12 @@
     <div id="join-container">
         <input
             id="name-input"
-            bind:value={username}
+            bind:value={usernameValue}
             bind:this={usernameInput}
             on:keydown={(e) => {
                 if (
                     e.key == "Enter" &&
-                    username !== "" &&
+                    usernameValue !== "" &&
                     !joinButton.disabled
                 ) {
                     joinChat();
