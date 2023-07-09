@@ -30,8 +30,8 @@
         joinButton.disabled = true;
         usernameInput.disabled = true;
 
-        // websocket = new WebSocket(`wss://${window.location.host}/websocket`);
-        websocket = new WebSocket(`ws://localhost:3000/websocket`);
+        websocket = new WebSocket(`wss://${window.location.host}/websocket`);
+        // websocket = new WebSocket(`ws://localhost:3000/websocket`);
 
         websocket.addEventListener("open", (event) => {
             websocket.send(usernameValue);
