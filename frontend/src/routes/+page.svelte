@@ -30,8 +30,8 @@
         joinButton.disabled = true;
         usernameInput.disabled = true;
 
-        websocket = new WebSocket(`wss://${window.location.host}/websocket`);
-        // websocket = new WebSocket(`ws://localhost:3000/websocket`);
+        // websocket = new WebSocket(`wss://${window.location.host}/websocket`);
+        websocket = new WebSocket(`ws://localhost:3000/websocket`);
 
         websocket.addEventListener("open", (event) => {
             websocket.send(usernameValue);
@@ -89,104 +89,102 @@
     <title>Rust chat</title>
 </svelte:head>
 
-<h1>
-    Chat app made with <a
-        href="https://github.com/tokio-rs/axum"
-        style="color: #21bad1;">Axum</a
-    >
-    and
-    <a href="https://kit.svelte.dev/" style="color: #ff531a;">SvelteKit</a>.
-</h1>
-
 <div id="container">
-    <div id="join-container">
-        <input
-            id="name-input"
-            bind:value={usernameValue}
-            bind:this={usernameInput}
-            on:keydown={(e) => {
-                if (
-                    e.key == "Enter" &&
-                    usernameValue !== "" &&
-                    !joinButton.disabled
-                ) {
-                    joinChat();
-                }
-            }}
-        />
-        <button id="join-button" on:click={joinChat} bind:this={joinButton}
-            >Join chat</button
-        >
+    <input
+        id="name-input"
+        bind:value={usernameValue}
+        bind:this={usernameInput}
+        on:keydown={(e) => {
+            if (
+                e.key == "Enter" &&
+                usernameValue !== "" &&
+                !joinButton.disabled
+            ) {
+                joinChat();
+            }
+        }}
+    />
+    <button id="join-button" on:click={joinChat} bind:this={joinButton}
+        >Join chat</button
+    >
+
+    <div id="chat-area">
+        {#each messages as message}
+            <Message {...message} />
+        {/each}
+
+        <span bind:this={scrollSpan} />
     </div>
 
-    <div id="chat-container">
-        <div id="chat-area">
-            {#each messages as message}
-                <Message {...message} />
-            {/each}
-
-            <span bind:this={scrollSpan} />
-        </div>
-
-        <input
-            id="message-input"
-            bind:value={input}
-            on:keydown={(e) => {
-                if (e.key == "Enter" && input !== "") {
-                    websocket.send(input);
-                    input = "";
-                }
-            }}
-        />
-    </div>
+    <input
+        id="message-input"
+        bind:value={input}
+        on:keydown={(e) => {
+            if (e.key == "Enter" && input !== "") {
+                websocket.send(input);
+                input = "";
+            }
+        }}
+    />
 </div>
 
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 
+    :global(html, body) {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
     :global(body) {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         background-color: #212121;
         color: #dbdbdb;
         font-family: "Inter";
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     #container {
+        height: 100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
+        flex: none;
         justify-content: center;
         align-items: center;
     }
 
-    #join-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: max-content;
+    #name-input {
+        margin-bottom: 1rem;
     }
 
-    #chat-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: max-content;
+    #chat-area {
+        box-sizing: border-box;
+        height: 100%;
+        width: 95%;
+        padding: 1rem;
+        background-color: #2b2b2b;
+        border-radius: 8px;
+        overflow: scroll;
+    }
+
+    #message-input {
+        box-sizing: border-box;
+        width: 95%;
+        margin-bottom: 1rem;
     }
 
     input {
         background-color: #3a3a3a;
-        /* border: 1px solid #131313; */
-        border: none;
         color: white;
-        padding: 7px;
+        border: none;
         border-radius: 8px;
-        width: 15rem;
-        height: 1rem;
-        margin: 8px;
+        padding: 7px;
+        margin-top: 1rem;
     }
 
     input:focus {
@@ -195,28 +193,22 @@
 
     button {
         background-color: #3a3a3a;
-        border: none;
         color: white;
-        padding: 7px;
+        border: none;
         border-radius: 8px;
-        margin: 8px;
+        padding: 7px;
+        margin-bottom: 1rem;
     }
 
-    #chat-area {
+    button:hover {
+        background-color: #4d4c4c;
+    }
+
+    button:active {
+        background-color: #5e5c5c;
+    }
+
+    button:disabled {
         background-color: #2b2b2b;
-        border: none;
-        color: white;
-        width: 110rem;
-        height: 40rem;
-        padding: 2rem;
-        padding: 7px;
-        border-radius: 8px;
-        margin: 8px;
-        resize: none;
-        overflow: scroll;
-    }
-
-    #message-input {
-        width: 110rem;
     }
 </style>
